@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的个人主页</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<div id="lightbox" onclick="closePhoto()">
+
+    <button
+        type="button"
+        class="close-button"
+        onclick="event.stopPropagation(); closePhoto()">
+        ×
+    </button>
+
+    <button
+        type="button"
+        class="prev-button"
+        onclick="event.stopPropagation(); changePhoto(-1)">
+        ‹
+    </button>
+
+    <img
+        id="lightbox-img"
+        alt="放大的摄影作品"
+        onclick="event.stopPropagation()">
+
+<div
+    class="lightbox-info"
+    onclick="event.stopPropagation()">
+
+    <p id="lightbox-title"></p>
+
+    <p id="lightbox-counter"></p>
+
+</div>
+
+    <button
+        type="button"
+        class="next-button"
+        onclick="event.stopPropagation(); changePhoto(1)">
+        ›
+    </button>
+
+</div>
+
+<script>
+    let currentPhotoIndex = 0;
+
+    function getGalleryPhotos() {
+        return Array.from(document.querySelectorAll(".photos img"));
+    }
+
+    function updateLightbox() {
+        const galleryPhotos = getGalleryPhotos();
+        const currentPhoto = galleryPhotos[currentPhotoIndex];
+
+        document.getElementById("lightbox-img").src =
+            currentPhoto.src;
+
+        document.getElementById("lightbox-title").textContent =
+            currentPhoto.alt;
+
+        document.getElementById("lightbox-counter").textContent =
+            `${currentPhotoIndex + 1} / ${galleryPhotos.length}`;
+    }
+
+    function openPhoto(photo) {
+        const galleryPhotos = getGalleryPhotos();
+
+        currentPhotoIndex = galleryPhotos.indexOf(photo);
+
+        updateLightbox();
+
+        document.getElementById("lightbox").style.display = "flex";
+    }
+
+    function closePhoto() {
+        document.getElementById("lightbox").style.display = "none";
+    }
+
+    function changePhoto(direction) {
+        const galleryPhotos = getGalleryPhotos();
+
+        if (galleryPhotos.length === 0) {
+            return;
+        }
+
+        currentPhotoIndex += direction;
+
+        if (currentPhotoIndex < 0) {
+            currentPhotoIndex = galleryPhotos.length - 1;
+        }
+
+        if (currentPhotoIndex >= galleryPhotos.length) {
+            currentPhotoIndex = 0;
+        }
+
+        updateLightbox();
+    }
+
+    document.addEventListener("keydown", function (event) {
+        const lightbox = document.getElementById("lightbox");
+
+        if (lightbox.style.display !== "flex") {
+            return;
+        }
+
+        if (event.key === "Escape") {
+            closePhoto();
+        }
+
+        if (event.key === "ArrowLeft") {
+            changePhoto(-1);
+        }
+
+        if (event.key === "ArrowRight") {
+            changePhoto(1);
+        }
+    });
+</script>
+
+<body>
+
+    <div class="card" id="home">
+        <img src="images/avatar.jpg" alt="我的头像">
+        <h1>你好，我是淅淅！</h1>
+
+        <p>欢迎来到我的第一个个人主页。</p>
+        <p>我喜欢摄影，记录生活中的美好瞬间。</p>
+        <p class="job">
+前端学习者 · 热爱创造美好的网页
+</p>
+<div class="skills">
+    <span>HTML</span>
+    <span>CSS</span>
+    <span>JavaScript</span>
+</div>
+<a class="button" href="#gallery">
+    查看我的作品
+</a>
+  
+<div class="about" id="about">
+
+    <h2>关于我</h2>
+
+    <p>
+        我是一名前端学习者，
+        喜欢使用 HTML、CSS 和 JavaScript
+        创造美好的网页。
+    </p>
+
+</div>
+<div class="projects">
+    <div class="gallery" id="gallery">
+
+    <h2>摄影作品</h2>
+
+    <section class="photo-category">
+        <h3>人像摄影</h3>
+
+        <div class="photos">
+            <img src="images/photo1.jpg"
+     alt="人像摄影作品1"
+     onclick="openPhoto(this)">
+            <img src="images/photo3.jpg" alt="窗边时光3"
+             onclick="openPhoto(this)">
+            <img src="images/photo4.jpg" alt="窗边时光4"
+             onclick="openPhoto(this)">
+            <img src="images/photo5.jpg" alt="窗边时光5"
+             onclick="openPhoto(this)">
+        </div>
+    </section>
+
+    <section class="photo-category">
+        <h3>动物摄影</h3>
+
+        <div class="photos">
+            <img src="images/photo6.jpg" alt="林间小猫1"
+             onclick="openPhoto(this)">
+            <img src="images/photo7.jpg" alt="林间小猫2"
+             onclick="openPhoto(this)">
+            <img src="images/photo8.jpg" alt="林间小猫3"
+             onclick="openPhoto(this)">
+        </div>
+    </section>
+
+    <section class="photo-category">
+        <h3>生活记录</h3>
+
+        <div class="photos">
+            <img src="images/photo10.jpg" alt="午后花园1"
+             onclick="openPhoto(this)">
+            <img src="images/photo11.jpg" alt="午后花园2"
+             onclick="openPhoto(this)">
+            <img src="images/photo12.jpg" alt="午后花园3"
+             onclick="openPhoto(this)">
+            <img src="images/photo13.jpg" alt="午后花园4"
+             onclick="openPhoto(this)">
+            <img src="images/photo14.jpg" alt="午后花园5"
+             onclick="openPhoto(this)">
+            <img src="images/photo15.jpg" alt="午后花园6"
+             onclick="openPhoto(this)">
+            <img src="images/photo16.jpg" alt="午后花园7"
+             onclick="openPhoto(this)">
+            <img src="images/photo9.jpg"  alt="午后花园8"
+             onclick="openPhoto(this)">
+            <img src="images/photo2.jpg"  alt="午后花园9"
+             onclick="openPhoto(this)">
+        </div>
+    </section>
+
+</div>
+</div>
+
+    <h3>个人主页</h3>
+
+    <p>
+    使用 HTML 和 CSS 制作的第一个个人网站。
+    </p>
+
+    <div class="project-tags">
+        <span>HTML</span>
+        <span>CSS</span>
+    </div>
+
+    <a href="#" class="project-button">
+        查看项目
+    </a>
+
+</div>
+</div>
+<section class="contact" id="contact">
+
+    <h2>联系我</h2>
+
+    <p>
+        欢迎交流摄影作品
+    </p>
+
+    <img 
+    src="images/qrcode.png" 
+    alt="qrcode"
+    class="qrcode">
+
+</section>
+</body>
+</html>
